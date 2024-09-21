@@ -8,7 +8,7 @@ This is an OAuth-based authentication system built using the Nest framework in T
 1: Clone the repository:
 
 ```bash
-$  git clone https://github.com/your-repository/oauth-custom.git
+$  git clone https://github.com/ab958/custom-oauth.git
 ```
 
 2: Install the dependencies:
