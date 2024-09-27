@@ -29,7 +29,7 @@ export class UserAccountService {
         password: hashedPassword,
       });
     } catch (error) {
-      throw new DynamicException('User Not created', HttpStatus.NOT_FOUND);
+      throw new DynamicException('User Not created', HttpStatus.BAD_REQUEST);
     }
 
     const payload = { sub: user._id };
