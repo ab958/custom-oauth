@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './shared/interceptor/transform.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { ApplicationModule } from './App/app.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
     }),
     UserAccountModule,
     UserProfileModule,
+    ApplicationModule
   ],
   controllers: [],
   providers: [

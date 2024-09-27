@@ -29,6 +29,10 @@ export class TransformInterceptor<T>
       delete data.message;
       delete data.statusCode;
 
+      if(Object.keys(data).length === 0){
+        data = null
+      }
+
       return { 
         data,
         statusCode: response.statusCode,
