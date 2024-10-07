@@ -7,6 +7,7 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './shared/interceptor/transform.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ApplicationModule } from './App/app.module';
+import { OauthModule } from './Oauth/oauth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ApplicationModule } from './App/app.module';
     }),
     UserAccountModule,
     UserProfileModule,
-    ApplicationModule
+    ApplicationModule,
+    OauthModule
   ],
   controllers: [],
   providers: [

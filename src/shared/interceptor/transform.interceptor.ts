@@ -13,31 +13,34 @@ export interface Response<T> {
 
 @Injectable()
 export class TransformInterceptor<T>
-  implements NestInterceptor<T, Response<T>>
-{
+  implements NestInterceptor<T, Response<T>> {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<Response<T>> {
+    const req = context.switchToHttp().getRequest();
+    const reqUrl = req.url;
     const response = context.switchToHttp().getResponse();
-    return next.handle().pipe(map((data) => { 
+    if (reqUrl.includes('/authorize')) {
+      return next.handle();
+    }
 
+    return next.handle().pipe(map((data) => {
       response.statusCode = data.statusCode || 200;
-      data.statusCode = response.statusCode; 
+      data.statusCode = response.statusCode;
       const message = data.message;
 
       delete data.message;
       delete data.statusCode;
 
-      if(Object.keys(data).length === 0){
+      if (Object.keys(data).length === 0) {
         data = null
       }
-
-      return { 
+      return {
         data,
         statusCode: response.statusCode,
         message
-       }
-    }));  
+      }
+    }));
   }
 }

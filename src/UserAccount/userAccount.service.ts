@@ -32,8 +32,7 @@ export class UserAccountService {
       throw new DynamicException('User Not created', HttpStatus.BAD_REQUEST);
     }
 
-    const payload = { sub: user._id };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.createToken( user._id )
 
     return {
       access_token: accessToken,
@@ -54,10 +53,10 @@ export class UserAccountService {
     }
     const isValid = await this.checkHashMatch(password, user.password);
     if (isValid) {
-      const payload = { sub: user._id };
+      const accessToken = this.createToken( user._id )
 
       return {
-        access_token: this.jwtService.sign(payload),
+        access_token: accessToken,
         user,
         message: 'User login SuccessFully'
       };
@@ -69,6 +68,12 @@ export class UserAccountService {
   private async hashPassword(password: string): Promise<string> {
     const saltOrRounds = 10;
     return await bcrypt.hash(password, saltOrRounds);
+  }
+
+  createToken(userId: any) {
+    const payload = { sub: userId };
+    const accessToken = this.jwtService.sign(payload);
+    return accessToken;
   }
 
   private async checkHashMatch(

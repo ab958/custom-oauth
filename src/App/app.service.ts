@@ -78,7 +78,7 @@ export class AppService {
 
     await this.appModel.findByIdAndUpdate(id, app);
 
-    return{ 
+    return { 
       message: 'App updated SuccessFully'
     }
   }
