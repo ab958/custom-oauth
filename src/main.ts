@@ -3,11 +3,14 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { GlobalExceptionFilter } from './shared/exception/exception.filter';
 import { Logger } from '@nestjs/common';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app: any = await NestFactory.create(AppModule, { cors: true });
   const port = 4000;
   app.useGlobalFilters(new GlobalExceptionFilter());
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('ejs');
   const config = new DocumentBuilder()
     .setTitle('Oauth')
     .setVersion('1.0')

@@ -8,6 +8,7 @@ import { TransformInterceptor } from './shared/interceptor/transform.interceptor
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ApplicationModule } from './App/app.module';
 import { OauthModule } from './Oauth/oauth.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { OauthModule } from './Oauth/oauth.module';
     ApplicationModule,
     OauthModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_INTERCEPTOR,

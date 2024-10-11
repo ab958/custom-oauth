@@ -15,15 +15,6 @@ export class AuthorizationCode extends Document {
   @Prop({ type: String, required: true })
   clientId: string;
 
-  @Prop({ type: String, required: true })
-  codeChallenge: string;
-
-  @Prop({ type: String, required: true })
-  codeChallengeMethod: string;
-
-  @Prop({ type: String, required: true })
-  scope: string;
-
   @Prop({ type:  mongoose.Schema.Types.ObjectId, required: false, ref: 'users' })
   user: User;
 }

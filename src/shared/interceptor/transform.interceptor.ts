@@ -21,7 +21,12 @@ export class TransformInterceptor<T>
     const req = context.switchToHttp().getRequest();
     const reqUrl = req.url;
     const response = context.switchToHttp().getResponse();
-    if (reqUrl.includes('/authorize')) {
+    if (
+      reqUrl.includes('/authorize') || 
+      reqUrl.includes('/oauth/consent') || 
+      reqUrl.includes('/favicon.ico') || 
+      reqUrl.includes('/oauth/login') 
+    ) {
       return next.handle();
     }
 

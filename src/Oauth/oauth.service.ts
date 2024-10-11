@@ -17,48 +17,38 @@ export class OAuthService {
 
   async validateClient(clientId: string, redirectUri: string): Promise<App> {
     const app = await this.appModel.findOne({ clientId });
-    console.log(app)
     if (!app || !app.redirectUri.includes(redirectUri)) {
       throw new DynamicException(`App not found`, HttpStatus.NOT_FOUND);
     }
     return app;
   }
 
-  async createAuthorizationCode(clientId: string, codeChallenge: string, codeChallengeMethod: string, scope: string, userId: string): Promise<string> {
+  async createAuthorizationCode(client_id: string,userId: any) {
     const authorizationCode = crypto.randomBytes(20).toString('hex');
     
     await this.authCodeModel.create({
       code: authorizationCode,
-      clientId,
-      codeChallenge,
-      codeChallengeMethod,
-      scope,
+      clientId: client_id,
       user: userId
     });
 
     return authorizationCode;
   }
 
-  async exchangeCodeForToken(clientId: string, authorizationCode: string, codeVerifier: string, redirectUri: string) {
+  async exchangeCodeForToken(clientId: string, authorizationCode: string, clientSecret: string, redirectUri: string) {
     const authData = await this.authCodeModel.findOne({ code: authorizationCode });
 
     if (!authData || authData.clientId !== clientId) {
       throw new DynamicException(`Wrong Code`, HttpStatus.NOT_FOUND);
     }
 
-    const hashedCodeVerifier = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
-    if (hashedCodeVerifier !== authData.codeChallenge) {
-      throw new DynamicException(`Wrong codeVerifier`, HttpStatus.NOT_FOUND);
-    }
+    // await this.authCodeModel.deleteOne({ code: authorizationCode });
 
-    await this.authCodeModel.deleteOne({ code: authorizationCode });
-
-    const accessToken = this.userAccountService.createToken(authData._id);
+    const accessToken = this.userAccountService.createToken(authData.user);
 
     return {
       access_token: accessToken,
       message: 'User Signup SuccessFully',
-      statusCode: HttpStatus.CREATED
     };
   }
 }

@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </link>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .highlight {
+            color: #569cd6;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="p-8">
+  <h1>Login</h1>
+  <form action="/oauth/login" method="post">
+    <input type="hidden" name="client_id" value="<%= clientId %>">
+    <input type="hidden" name="redirect_uri" value="<%= redirectUri %>">
+    <input type="hidden" name="response_type"value="<%= responseType %>">
+    <input type="hidden" name="scope" value="<%= scope %>">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username"><br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Login">
+  </form>
+</body>
+
+</html>

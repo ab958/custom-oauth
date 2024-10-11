@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </link>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .highlight {
+            color: #569cd6;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="p-8">
+    <h1>Authorize <%= applicationName %>?</h1>
+    <p><%= applicationName %> is requesting access to the following scopes:</p>
+    <ul>
+        <li>Profile</li>
+        <li>Email</li>
+    </ul>
+    <p>This will allow <%= applicationName %> to access your profile information and email address.</p>
+    <form action="/oauth/login" method="get">
+        <input type="hidden" name="client_id" value="<%= clientId %>">
+        <input type="hidden" name="redirect_uri" value="<%= redirectUri %>">
+        <input type="hidden" name="responseType"value="<%= responseType %>">
+        <input type="hidden" name="scope" value="<%= scope %>">
+        <input type="submit" value="Authorize">
+        <input type="button" value="Cancel" onclick="window.history.back()">
+    </form>
+</body>
+
+</html>
